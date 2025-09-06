@@ -44,7 +44,7 @@ if user_input:
             "max_tokens": 500
         }
 
-        response = requests.post(url, headers=headers, data=json.dumps(payload))
+        response = requests.post(url, headers=headers, json=payload)  # 여기 수정됨
         if response.status_code == 200:
             reply = response.json()["choices"][0]["message"]["content"]
             with st.chat_message("assistant"):
