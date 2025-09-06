@@ -37,3 +37,16 @@ responses = {
     # … 200개 더 생략했지만 실제론 300개 구성됨
 }
 
+# 사용자 입력창
+user_input = st.text_input("질문을 입력하세요:")
+
+if user_input:
+    user_input_lower = user_input.lower()  # 소문자 변환(간단한 유연성)
+    reply = None
+    for key in responses:
+        if key in user_input_lower:
+            reply = responses[key]
+            break
+    if not reply:
+        reply = "무슨 말인지 모르겠어요."
+    st.write(f"🤖 답변: {reply}")
