@@ -1,9 +1,11 @@
 import streamlit as st
 import requests
 import json
-import os
 
 st.set_page_config(page_title="My GenAI App", page_icon="🤖")
+
+# 🔑 API Key 직접 입력
+api_key = "sk-여기에_본인_API_KEY"
 
 # 세션 상태 초기화
 if "messages" not in st.session_state:
@@ -29,16 +31,15 @@ if user_input:
     with st.chat_message("user"):
         st.markdown(user_input)
 
-    # OpenAI API 호출
-    api_key = os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY")
+    # API 호출
     if not api_key:
         with st.chat_message("assistant"):
-            st.error("API Key가 없습니다. 환경변수 OPENAI_API_KEY를 설정하세요.")
+            st.error("API Key가 없습니다. 코드 안에 직접 입력하세요.")
     else:
         url = "https://api.openai.com/v1/chat/completions"
         headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
         payload = {
-            "model": "gpt-4o-mini",  # 원하면 다른 모델명으로 교체 가능
+            "model": "gpt-4o-mini",  # 필요시 모델명 변경 가능
             "messages": st.session_state.messages,
             "max_tokens": 500
         }
